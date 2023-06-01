@@ -1,0 +1,96 @@
+
+/* Card Generator */
+.tickets {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+
+  .ticket-block {
+    flex: 0 0 49% !important;
+    margin: 1rem auto;
+
+    @media screen and (max-width: 1200px){
+      flex: 1 1 800px !important;
+    }
+    .ticket {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      border-radius: 0.5rem;
+      > .col {
+        flex: 1 0 auto !important;
+      }
+      .card {
+        width: 100%;
+        display: inline-block;
+        margin: .5%;
+        padding: 1rem;
+
+        .col {
+          padding: 0 !important;
+          margin: 0 !important;
+          flex-basis: 11%;
+          max-width: 11%;
+      
+          .card-numbers {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            border-top: 1px solid #cecece;
+            border-bottom: 1px solid #cecece;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: stretch;
+      
+            .card-number {
+              background: white;
+              border: 1px solid #cecece;
+              height: 65px;
+              span {
+                font-size: 45px;
+                line-height: 65px;
+              }
+      
+              &:first-child {
+                border-top: 0;
+              }
+              &:last-child {
+                border-bottom: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.print-six .ticket {
+  max-width: 1024px;
+  margin: 0 auto;
+  .card {
+    width: 32%;
+    .col {
+      .card-column {
+        font-size: 2.25rem;
+        height: 3.25rem;
+        max-height: 3.25rem;
+        line-height: 1;
+      }
+      .card-numbers {
+        .card-number {
+          font-size: 2.25rem;
+          max-height: 3.5rem;
+          height: 3.5rem;
+
+          .freespace {
+            padding: 0.57rem 0;
+            > span {
+              font-size: .8rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

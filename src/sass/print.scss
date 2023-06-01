@@ -1,0 +1,85 @@
+@media print {
+  @page {
+    margin: 0.15in 0.15in 0.15in 0.15in !important;
+    orientation: portrait;
+  }
+  @page:blank {
+    display: none;
+  }
+  div {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    -webkit-break-inside: avoid;
+  }
+  header, footer, .no-print {
+    display: none;
+  }
+  body {
+    -webkit-print-color-adjust: exact !important;
+  }
+  .ticket-block {
+    max-width: unset;
+    margin: 1rem auto;
+  }
+  .pale-gray-bg {
+    background: white;
+  }
+  .print-bw {
+     filter: Gray();
+     filter: url('#grayscale'); 
+     -webkit-filter: grayscale(100%); 
+     filter: grayscale(100%); 
+  }
+  .print-two {
+    @page {
+      orientation: portrait;
+    }
+    .card {
+      .col {
+        .card-number {
+          background: white;
+          border: 1px solid #cecece;
+          height: 40px;
+          span {
+            font-size: 25px;
+            line-height: 40px;
+          }
+        }
+      }
+    }
+  }
+  .print-four {
+    @page {
+      orientation: landscape;
+    }
+    .card {
+      .col {
+        .card-number {
+          background: white;
+          border: 1px solid #cecece;
+          height: 20px;
+          span {
+            font-size: 15px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
+  .print-six {
+    .card {
+      width: 30%;
+      .col {
+        .card-number {
+          background: white;
+          border: 1px solid #cecece;
+          height: 65px;
+          span {
+            font-size: 45px;
+            line-height: 65px;
+          }
+        }
+      }
+    }
+  }
+}
