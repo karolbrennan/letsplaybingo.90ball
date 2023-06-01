@@ -62,7 +62,7 @@ class About extends React.Component {
 						<h2 className="margin-vertical-md">Got Ideas?</h2>
 						<p>
 							Do you have ideas for how to make Let's Play Bingo even better? Send a message to{" "}
-							<a href="mailto:hello@letsplaybingo.io">hello@letsplaybingo.io</a>!
+							<a href="mailto:hello@letsplaybingo.io?subject=Lets Play Bingo 90 Ball">hello@letsplaybingo.io</a>!
 						</p>
 					</div>
 				</div>

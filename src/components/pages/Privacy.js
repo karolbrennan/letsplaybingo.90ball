@@ -163,7 +163,7 @@ class Disclaimer extends React.Component {
 							If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the
 							account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we
 							have collected from children under age 18, please contact us at{" "}
-							<a href="mailto:hello@letsplaybingo.io">hello@letsplaybingo.io</a>.
+							<a href="mailto:hello@letsplaybingo.io?subject=Lets Play Bingo 90 Ball">hello@letsplaybingo.io</a>.
 						</p>
 
 						<h2>What are your privacy rights?</h2>
@@ -227,14 +227,15 @@ class Disclaimer extends React.Component {
 						<h2>How can you contact us about this policy?</h2>
 						<p>
 							If you have questions or comments about this policy, you may email us at{" "}
-							<a href="mailto:hello@letsplaybingo.io">hello@letsplaybingo.io</a>.
+							<a href="mailto:hello@letsplaybingo.io?subject=Lets Play Bingo 90 Ball">hello@letsplaybingo.io</a>.
 						</p>
 
 						<h2>How can you review, update, or delete the data we collect from you?</h2>
 						<p>
 							We do not collect data from you. But if you'd like for us to delete any emails you've sent to us or anything of that
-							nature, please email us at <a href="mailto:hello@letsplaybingo.io">hello@letsplaybingo.io</a> and we will respond to your
-							request within 30 days. As for third party applications please review their policies here:{" "}
+							nature, please email us at{" "}
+							<a href="mailto:hello@letsplaybingo.io?subject=Lets Play Bingo 90 Ball">hello@letsplaybingo.io</a> and we will respond to
+							your request within 30 days. As for third party applications please review their policies here:{" "}
 						</p>
 						<p>
 							Google Analytics:{" "}
