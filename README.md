@@ -1,9 +1,6 @@
-# Let's Play Bingo - 90 Ball
+# Let's Play Bingo - 90 Ball [![Netlify Status](https://api.netlify.com/api/v1/badges/b70ed4c3-54c7-49e1-880c-9d21499f3c90/deploy-status)](https://app.netlify.com/sites/lpb90ball/deploys)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b70ed4c3-54c7-49e1-880c-9d21499f3c90/deploy-status)](https://app.netlify.com/sites/letsplaybingo/deploys)
-
-This is a very simple bingo caller - it generates random bingo numbers, keeps track of them on a live bingo board.
-If voice synthesis is supported by the browser the balls will be called aloud using the web speech synthesis api.
+This is the 90 ball edition of Let's Play Bingo.
 
 #### Current URL
 
