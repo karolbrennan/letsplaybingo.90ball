@@ -1,6 +1,6 @@
 # Let's Play Bingo - 90 Ball [![Netlify Status](https://api.netlify.com/api/v1/badges/b70ed4c3-54c7-49e1-880c-9d21499f3c90/deploy-status)](https://app.netlify.com/sites/lpb90ball/deploys)
 
-This is the 90 ball edition of Let's Play Bingo.
+This is the 90 ball edition of Let's Play Bingo. 90 Ball is a version of bingo played mostly in the UK. There's quirks with this game type. The board goes up to 90 numbers, and it is played on special cards called Tickets.
 
 #### Current URL
 
