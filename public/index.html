@@ -35,18 +35,30 @@
 		<meta name="twitter:image" content="/images/icons/ogimage.png" />
 		<meta name="twitter:image:alt" content="Let's Play Bingo Site Preview" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png" />
-		<link rel="manifest" href="/images/icons/site.webmanifest" />
-		<link rel="mask-icon" href="/images/icons/safari-pinned-tab.svg" color="#5bbad5" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="manifest" href="/manifest.json" />
+		<link rel="shortcut icon" href="/favicon.svg" />
 		<meta name="msapplication-TileColor" content="#ffffff" />
 		<meta name="theme-color" content="#ffffff" />
-		<link rel="shortcut icon" href="/favicon.svg" />
 		<title>Let's Play Bingo! 90 Ball! | Free Online Bingo Caller</title>
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="root"></div>
+		<!-- Service Worker -->
+		<script>
+			if ("serviceWorker" in navigator) {
+				window.addEventListener("load", () => {
+					navigator.serviceWorker
+						.register("./service-worker.js")
+						.then((reg) => {})
+						.catch((error) => {
+							console.error(error);
+						});
+				});
+			}
+		</script>
 		<!-- START Google Translate -->
 		<script defer type="text/javascript">
 			function googleTranslateElementInit() {
