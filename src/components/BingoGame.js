@@ -1188,10 +1188,10 @@ class BingoGame extends Component {
 
 						{/* ----------- Info ------------- */}
 						<div className="col grow min-size-350 padding-vertical-xxlg padding-horizontal-xxlg white-text">
-							<h4 className="margin-vertical-md">Latest Updates</h4>
+							<h4 className="margin-vertical-md">THIS VERSION IS RETIRED</h4>
 							<p className="wrap-text small-text">
-								This version is retired and was last updated on{' '}
-								<strong>5/21/2022</strong>.
+								This version was last updated on <strong>5/21/2022</strong>. It
+								will no longer receive updates.
 							</p>
 							<p className="wrap-text small-text">
 								For the latest version of Let's Play Bingo 90 Ball with new
