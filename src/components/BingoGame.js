@@ -6,19 +6,43 @@
  * http://github.com/karolbrennan
  */
 // Dependencies
-import React, { Component } from "react";
-import Slider from "rc-slider";
-import Select from "react-select";
+import React, { Component } from 'react';
+import Slider from 'rc-slider';
+import Select from 'react-select';
 
 // Custom Components
-import BingoBoard from "./subcomponents/BingoBoard.js";
-import CallHistory from "./subcomponents/CallHistory.js";
+import BingoBoard from './subcomponents/BingoBoard.js';
+import CallHistory from './subcomponents/CallHistory.js';
 
 // Utilities
-import { generateBingoBoard, getRandomBingoNumber, getBallDisplay, getLogoBallDisplay, getLanguageText, getPhrase } from "../utils.js";
+import {
+	generateBingoBoard,
+	getRandomBingoNumber,
+	getBallDisplay,
+	getLogoBallDisplay,
+	getLanguageText,
+	getPhrase,
+} from '../utils.js';
 
 // Chimes
-import { chime1, chime2, chime3, chime4, chime5, chime6, chime7, chime8, chime9, chime10, chime11, chime12, pop1, pop2, pop3, pop4 } from "../chimes";
+import {
+	chime1,
+	chime2,
+	chime3,
+	chime4,
+	chime5,
+	chime6,
+	chime7,
+	chime8,
+	chime9,
+	chime10,
+	chime11,
+	chime12,
+	pop1,
+	pop2,
+	pop3,
+	pop4,
+} from '../chimes';
 class BingoGame extends Component {
 	constructor(props) {
 		super(props);
@@ -29,26 +53,29 @@ class BingoGame extends Component {
 		this.currentBall = null;
 		this.interval = null;
 		this.chimes = [
-			{ label: "Chime 1", value: chime1 },
-			{ label: "Chime 2", value: chime2 },
-			{ label: "Chime 3", value: chime3 },
-			{ label: "Chime 4", value: chime4 },
-			{ label: "Chime 5", value: chime5 },
-			{ label: "Chime 6", value: chime6 },
-			{ label: "Chime 7", value: chime7 },
-			{ label: "Chime 8", value: chime8 },
-			{ label: "Chime 9", value: chime9 },
-			{ label: "Chime 10", value: chime10 },
-			{ label: "Chime 11", value: chime11 },
-			{ label: "Chime 12", value: chime12 },
-			{ label: "Pop 1", value: pop1 },
-			{ label: "Pop 2", value: pop2 },
-			{ label: "Pop 3", value: pop3 },
-			{ label: "Pop 4", value: pop4 },
+			{ label: 'Chime 1', value: chime1 },
+			{ label: 'Chime 2', value: chime2 },
+			{ label: 'Chime 3', value: chime3 },
+			{ label: 'Chime 4', value: chime4 },
+			{ label: 'Chime 5', value: chime5 },
+			{ label: 'Chime 6', value: chime6 },
+			{ label: 'Chime 7', value: chime7 },
+			{ label: 'Chime 8', value: chime8 },
+			{ label: 'Chime 9', value: chime9 },
+			{ label: 'Chime 10', value: chime10 },
+			{ label: 'Chime 11', value: chime11 },
+			{ label: 'Chime 12', value: chime12 },
+			{ label: 'Pop 1', value: pop1 },
+			{ label: 'Pop 2', value: pop2 },
+			{ label: 'Pop 3', value: pop3 },
+			{ label: 'Pop 4', value: pop4 },
 		];
 
 		// Speech Synthesis
-		this.speechEnabled = Object.prototype.hasOwnProperty.call(window, "speechSynthesis");
+		this.speechEnabled = Object.prototype.hasOwnProperty.call(
+			window,
+			'speechSynthesis',
+		);
 		this.synth = window.speechSynthesis;
 
 		// if speech is enabled, initialize other speech properties
@@ -57,8 +84,8 @@ class BingoGame extends Component {
 			this.voices = this.synth.getVoices();
 		}
 
-		let gameData = JSON.parse(localStorage.getItem("lpb90-gameData"));
-		let gameState = JSON.parse(localStorage.getItem("lpb90-gameState"));
+		let gameData = JSON.parse(localStorage.getItem('lpb90-gameData'));
+		let gameState = JSON.parse(localStorage.getItem('lpb90-gameState'));
 
 		if (gameData && gameState) {
 			for (let key in gameData) {
@@ -117,8 +144,8 @@ class BingoGame extends Component {
 			currentBall: this.currentBall,
 			interval: this.interval,
 		};
-		localStorage.setItem("lpb90-gameData", JSON.stringify(gameData));
-		localStorage.setItem("lpb90-gameState", JSON.stringify(this.state));
+		localStorage.setItem('lpb90-gameData', JSON.stringify(gameData));
+		localStorage.setItem('lpb90-gameState', JSON.stringify(this.state));
 	}
 
 	/**
@@ -127,8 +154,8 @@ class BingoGame extends Component {
 	 * @return  {[type]}  [return description]
 	 */
 	initializeFromLocalStorage = () => {
-		let gameData = JSON.parse(localStorage.getItem("lpb90-gameData"));
-		let gameState = JSON.parse(localStorage.getItem("lpb90-gameState"));
+		let gameData = JSON.parse(localStorage.getItem('lpb90-gameData'));
+		let gameState = JSON.parse(localStorage.getItem('lpb90-gameState'));
 		if (gameData && gameState) {
 			for (let key in gameData) {
 				this[key] = gameData[key];
@@ -151,10 +178,14 @@ class BingoGame extends Component {
 			// has a language that doesn't have a caller available for it.
 			selectedCaller = this.voices[0];
 		}
-		let userLanguage = window.navigator.userLanguage || window.navigator.language;
+		let userLanguage =
+			window.navigator.userLanguage || window.navigator.language;
 		// loop through voices and either choose the one that matches the selection or choose the first one that matches user's language
 		this.voices.forEach((voice) => {
-			if (selectedCaller && Object.prototype.hasOwnProperty.call(selectedCaller, "value")) {
+			if (
+				selectedCaller &&
+				Object.prototype.hasOwnProperty.call(selectedCaller, 'value')
+			) {
 				if (voice.name === selectedCaller.value) {
 					this.setState({ selectedCaller: voice });
 				}
@@ -177,7 +208,7 @@ class BingoGame extends Component {
 			let msg = new SpeechSynthesisUtterance();
 			msg.text = text;
 			msg.volume = 1;
-			if (Object.prototype.hasOwnProperty.call(this.state, "selectedCaller")) {
+			if (Object.prototype.hasOwnProperty.call(this.state, 'selectedCaller')) {
 				this.voices.forEach((caller) => {
 					if (caller.value === this.state.selectedCaller.value) {
 						msg.voice = caller;
@@ -207,13 +238,24 @@ class BingoGame extends Component {
 	voiceCall = (ball) => {
 		// call the new ball, first call it all together, then call each character individually
 		let ballstring = ball.number.toString();
-		let callGroup = [ball.number, " ", " ", " "];
+		let callGroup = [ball.number, ' ', ' ', ' '];
 		if (this.state.doubleCall && this.state.extraTalk) {
-			callGroup.push(ballstring.length === 2 ? [ballstring.charAt(0), " ", ballstring.charAt(1)] : ball.number, " ", " ", " ");
+			callGroup.push(
+				ballstring.length === 2
+					? [ballstring.charAt(0), ' ', ballstring.charAt(1)]
+					: ball.number,
+				' ',
+				' ',
+				' ',
+			);
 			callGroup.push(getPhrase(ball.number));
 		} else {
 			if (this.state.doubleCall) {
-				callGroup.push(ballstring.length === 2 ? [ballstring.charAt(0), " ", ballstring.charAt(1)] : ball.number);
+				callGroup.push(
+					ballstring.length === 2
+						? [ballstring.charAt(0), ' ', ballstring.charAt(1)]
+						: ball.number,
+				);
 			}
 			if (this.state.extraTalk) {
 				callGroup.push(getPhrase(ball.number));
@@ -233,16 +275,37 @@ class BingoGame extends Component {
 		if (this.state.extraTalk) {
 			if (this.state.evensOdds) {
 				window.setTimeout(() => {
-					this.say(["The wild number ", " ", ball.number, " ", " ", ` mark every ${ball.number % 2 === 1 ? "odd number" : "even number"}`]);
+					this.say([
+						'The wild number ',
+						' ',
+						ball.number,
+						' ',
+						' ',
+						` mark every ${ball.number % 2 === 1 ? 'odd number' : 'even number'}`,
+					]);
 				}, 2000);
 			} else {
 				window.setTimeout(() => {
-					this.say(["The wild number ", " ", ball.number, " ", " ", ` mark every number ending in ${ballstring.substr(-1)}`]);
+					this.say([
+						'The wild number ',
+						' ',
+						ball.number,
+						' ',
+						' ',
+						` mark every number ending in ${ballstring.substr(-1)}`,
+					]);
 				}, 2000);
 			}
 		} else {
 			if (this.state.doubleCall) {
-				this.say([ball.number, " ", " ", ballstring.length === 2 ? [ballstring.charAt(0), " ", ballstring.charAt(1)] : ball.number]);
+				this.say([
+					ball.number,
+					' ',
+					' ',
+					ballstring.length === 2
+						? [ballstring.charAt(0), ' ', ballstring.charAt(1)]
+						: ball.number,
+				]);
 			} else {
 				this.say([ball.number]);
 			}
@@ -318,7 +381,10 @@ class BingoGame extends Component {
 		let lastBall = null;
 		let board = this.state.board;
 		let totalBallsCalled = this.totalBallsCalled;
-		let previousCallList = this.state.previousCallList.length > 0 ? [...this.state.previousCallList] : [];
+		let previousCallList =
+			this.state.previousCallList.length > 0
+				? [...this.state.previousCallList]
+				: [];
 
 		Object.keys(board).forEach((column) => {
 			board[column].forEach((number) => {
@@ -333,12 +399,18 @@ class BingoGame extends Component {
 						}
 						totalBallsCalled++;
 						previousCallList.push(number);
-					} else if (!this.state.evensOdds && number.number.toString().slice(-1) === wildNumber) {
+					} else if (
+						!this.state.evensOdds &&
+						number.number.toString().slice(-1) === wildNumber
+					) {
 						lastBall = number;
 						number.called = true;
 						totalBallsCalled++;
 						previousCallList.push(number);
-					} else if (this.state.evensOdds && (number.number % 2 === 1) === odd) {
+					} else if (
+						this.state.evensOdds &&
+						(number.number % 2 === 1) === odd
+					) {
 						lastBall = number;
 						number.called = true;
 						totalBallsCalled++;
@@ -374,15 +446,21 @@ class BingoGame extends Component {
 
 	confirmResetGame = () => {
 		// Clear out local storage
-		localStorage.removeItem("lpb90-gameData");
-		localStorage.removeItem("lpb90-gameState");
+		localStorage.removeItem('lpb90-gameData');
+		localStorage.removeItem('lpb90-gameState');
 		// reset everything with the board
 		clearInterval(this.interval);
 		this.cancelSpeech();
 		this.totalBallsCalled = 0;
 		this.previousBall = null;
 		this.currentBall = null;
-		this.setState({ board: generateBingoBoard(), wildBall: null, running: false, showResetModal: false, previousCallList: [] });
+		this.setState({
+			board: generateBingoBoard(),
+			wildBall: null,
+			running: false,
+			showResetModal: false,
+			previousCallList: [],
+		});
 	};
 
 	callBingoNumber = () => {
@@ -455,7 +533,9 @@ class BingoGame extends Component {
 		} else {
 			clearInterval(this.interval);
 			this.totalBallsCalled = 90;
-			this.say("Someone better have a bingo because we have run out of balls to call!");
+			this.say(
+				'Someone better have a bingo because we have run out of balls to call!',
+			);
 			this.previousBall = this.currentBall;
 			this.currentBall = null;
 			this.setState({ running: false });
@@ -474,31 +554,34 @@ class BingoGame extends Component {
 	handleCheckbox = (e) => {
 		let gamemode = e.currentTarget.dataset.gamemode;
 		switch (gamemode) {
-			case "enable-doublecall":
+			case 'enable-doublecall':
 				this.setState({ doubleCall: e.currentTarget.checked });
 				break;
-			case "enable-extratalk":
+			case 'enable-extratalk':
 				this.setState({ extraTalk: e.currentTarget.checked });
 				break;
-			case "wild-bingo":
+			case 'wild-bingo':
 				this.setState({ wildBingo: e.currentTarget.checked });
 				break;
-			case "evens-odds":
+			case 'evens-odds':
 				this.setState({ evensOdds: e.currentTarget.checked });
 				break;
-			case "enable-caller":
+			case 'enable-caller':
 				if (this.synth.speaking) {
 					this.cancelSpeech();
 				}
 				this.setState({ enableCaller: e.currentTarget.checked });
 				break;
-			case "display-board":
+			case 'display-board':
 				if (e.currentTarget.checked && this.state.running) {
 					clearInterval(this.interval);
 				}
-				this.setState({ displayBoardOnly: e.currentTarget.checked, running: false });
+				this.setState({
+					displayBoardOnly: e.currentTarget.checked,
+					running: false,
+				});
 				break;
-			case "enable-chime":
+			case 'enable-chime':
 				this.setState({ chime: e.currentTarget.checked });
 				break;
 			default:
@@ -514,7 +597,9 @@ class BingoGame extends Component {
 	 * @return  {JSX}  JSX Element
 	 */
 	get currentBallDisplay() {
-		return this.currentBall !== null ? getBallDisplay(this.currentBall) : getLogoBallDisplay();
+		return this.currentBall !== null
+			? getBallDisplay(this.currentBall)
+			: getLogoBallDisplay();
 	}
 
 	/**
@@ -523,7 +608,7 @@ class BingoGame extends Component {
 	 * @return  {JSX}  html element
 	 */
 	get numberDisplay() {
-		let numbers = this.totalBallsCalled.toString().split("");
+		let numbers = this.totalBallsCalled.toString().split('');
 		if (numbers.length === 1) {
 			return (
 				<div>
@@ -532,7 +617,9 @@ class BingoGame extends Component {
 				</div>
 			);
 		} else {
-			return numbers.map((number, index) => <span key={"numDisplay" + number + index}>{number}</span>);
+			return numbers.map((number, index) => (
+				<span key={'numDisplay' + number + index}>{number}</span>
+			));
 		}
 	}
 
@@ -544,9 +631,9 @@ class BingoGame extends Component {
 	get currentCallDisplay() {
 		const currentCall = this.currentBall;
 		if (currentCall) {
-			let numbers = ["0"];
-			if (Object.prototype.hasOwnProperty.call(currentCall, "number")) {
-				numbers = currentCall.number.toString().split("");
+			let numbers = ['0'];
+			if (Object.prototype.hasOwnProperty.call(currentCall, 'number')) {
+				numbers = currentCall.number.toString().split('');
 			}
 			if (numbers.length === 1) {
 				return (
@@ -556,7 +643,9 @@ class BingoGame extends Component {
 					</div>
 				);
 			} else {
-				return numbers.map((number, index) => <span key={"call" + number + index}>{number}</span>);
+				return numbers.map((number, index) => (
+					<span key={'call' + number + index}>{number}</span>
+				));
 			}
 		} else {
 			return (
@@ -576,9 +665,9 @@ class BingoGame extends Component {
 	get previousCallDisplay() {
 		const previousCall = this.previousBall;
 		if (previousCall) {
-			let numbers = ["0"];
-			if (Object.prototype.hasOwnProperty.call(previousCall, "number")) {
-				numbers = previousCall.number.toString().split("");
+			let numbers = ['0'];
+			if (Object.prototype.hasOwnProperty.call(previousCall, 'number')) {
+				numbers = previousCall.number.toString().split('');
 			}
 			if (numbers.length === 1) {
 				return (
@@ -588,7 +677,9 @@ class BingoGame extends Component {
 					</div>
 				);
 			} else {
-				return numbers.map((number, index) => <span key={"call" + number + index}>{number}</span>);
+				return numbers.map((number, index) => (
+					<span key={'call' + number + index}>{number}</span>
+				));
 			}
 		} else {
 			return (
@@ -626,7 +717,8 @@ class BingoGame extends Component {
 						className="modal-backdrop"
 						onClick={(e) => {
 							e.preventDefault();
-						}}></div>
+						}}
+					></div>
 				</div>
 			);
 		} else {
@@ -647,7 +739,7 @@ class BingoGame extends Component {
 			this.voices.forEach((voice) => {
 				let voiceObj = voice;
 				voiceObj.value = voice.name;
-				voiceObj.label = voice.name + " / " + getLanguageText(voice.lang);
+				voiceObj.label = voice.name + ' / ' + getLanguageText(voice.lang);
 				voiceOptions.push(voiceObj);
 			});
 		}
@@ -726,7 +818,9 @@ class BingoGame extends Component {
 		body += `%0D%0A%0D%0A----- Game State ------ %0D%0A`;
 		let gameData = this.state;
 		body += JSON.stringify(gameData);
-		window.open(`mailto:hello@letsplaybingo.io?subject=${subject}&body=${body}`);
+		window.open(
+			`mailto:hello@letsplaybingo.io?subject=${subject}&body=${body}`,
+		);
 	};
 
 	/* ------------------- Render */
@@ -742,15 +836,24 @@ class BingoGame extends Component {
 							<div className="col min-size-250 padding-vertical-xxlg padding-horizontal-md notranslate">
 								{this.currentBallDisplay}
 
-								<CallHistory calledBalls={this.state.previousCallList}></CallHistory>
+								<CallHistory
+									calledBalls={this.state.previousCallList}
+								></CallHistory>
 
-								<div data-visibility={this.state.wildBingo ? "show" : "hide"} className="white-text text-center margin-top-lg">
+								<div
+									data-visibility={this.state.wildBingo ? 'show' : 'hide'}
+									className="white-text text-center margin-top-lg"
+								>
 									<strong>Wild Ball: </strong> {this.state.wildBall}
 								</div>
 							</div>
 						</div>
 						<div className="col board-side">
-							<BingoBoard board={this.state.board} manualMode={this.state.displayBoardOnly} manualCall={this.manualCall} />
+							<BingoBoard
+								board={this.state.board}
+								manualMode={this.state.displayBoardOnly}
+								manualCall={this.manualCall}
+							/>
 						</div>
 					</div>
 				</section>
@@ -764,20 +867,35 @@ class BingoGame extends Component {
 								<div data-disabled={this.totalBallsCalled >= 90}>
 									<button
 										data-disabled={this.state.displayBoardOnly}
-										onClick={this.totalBallsCalled === 0 ? this.startNewGame : this.callBingoNumber}
-										disabled={this.state.running}>
-										{this.totalBallsCalled === 0 ? "Start New Game" : "Call Next Number"}
+										onClick={
+											this.totalBallsCalled === 0
+												? this.startNewGame
+												: this.callBingoNumber
+										}
+										disabled={this.state.running}
+									>
+										{this.totalBallsCalled === 0
+											? 'Start New Game'
+											: 'Call Next Number'}
 									</button>
 
 									<button
 										data-disabled={this.state.displayBoardOnly}
 										data-newgame={this.totalBallsCalled === 0}
-										onClick={this.totalBallsCalled === 0 ? this.startNewAutoplayGame : this.toggleGame}>
-										{this.state.running ? "Pause Autoplay" : "Start Autoplay"}
+										onClick={
+											this.totalBallsCalled === 0
+												? this.startNewAutoplayGame
+												: this.toggleGame
+										}
+									>
+										{this.state.running ? 'Pause Autoplay' : 'Start Autoplay'}
 									</button>
 								</div>
 
-								<button onClick={this.toggleResetModal} disabled={this.state.running || this.totalBallsCalled === 0}>
+								<button
+									onClick={this.toggleResetModal}
+									disabled={this.state.running || this.totalBallsCalled === 0}
+								>
 									Reset Board
 								</button>
 							</section>
@@ -794,39 +912,72 @@ class BingoGame extends Component {
 									</div>
 									<div className="col grow min-size-150 padding-horizontal-lg">
 										<div className="row">
-											<div className="col grow" data-disabled={this.totalBallsCalled > 0}>
-												<label className={this.state.displayBoardOnly ? "toggle checked" : "toggle"}>
+											<div
+												className="col grow"
+												data-disabled={this.totalBallsCalled > 0}
+											>
+												<label
+													className={
+														this.state.displayBoardOnly
+															? 'toggle checked'
+															: 'toggle'
+													}
+												>
 													<span className="toggle-span"></span>
 													<span>Manual Calling Mode</span>
 													<input
 														type="checkbox"
 														data-gamemode="display-board"
 														onChange={this.handleCheckbox}
-														checked={this.state.displayBoardOnly}></input>
+														checked={this.state.displayBoardOnly}
+													></input>
 												</label>
 											</div>
 										</div>
-										<div className="row justify-start" data-visibility={this.state.displayBoardOnly === false ? "show" : "hide"}>
-											<div className="col padding-right-xlg" data-disabled={this.totalBallsCalled > 0}>
-												<label className={this.state.wildBingo ? "toggle checked" : "toggle"}>
+										<div
+											className="row justify-start"
+											data-visibility={
+												this.state.displayBoardOnly === false ? 'show' : 'hide'
+											}
+										>
+											<div
+												className="col padding-right-xlg"
+												data-disabled={this.totalBallsCalled > 0}
+											>
+												<label
+													className={
+														this.state.wildBingo ? 'toggle checked' : 'toggle'
+													}
+												>
 													<span className="toggle-span"></span>
 													<span>Wild Bingo</span>
 													<input
 														type="checkbox"
 														data-gamemode="wild-bingo"
 														onChange={this.handleCheckbox}
-														checked={this.state.wildBingo}></input>
+														checked={this.state.wildBingo}
+													></input>
 												</label>
 											</div>
-											<div className="col padding-right-xlg" data-disabled={!this.state.wildBingo || this.totalBallsCalled > 0}>
-												<label className={this.state.evensOdds ? "toggle checked" : "toggle"}>
+											<div
+												className="col padding-right-xlg"
+												data-disabled={
+													!this.state.wildBingo || this.totalBallsCalled > 0
+												}
+											>
+												<label
+													className={
+														this.state.evensOdds ? 'toggle checked' : 'toggle'
+													}
+												>
 													<span className="toggle-span"></span>
 													<span>Evens/Odds</span>
 													<input
 														type="checkbox"
 														data-gamemode="evens-odds"
 														onChange={this.handleCheckbox}
-														checked={this.state.evensOdds}></input>
+														checked={this.state.evensOdds}
+													></input>
 												</label>
 											</div>
 										</div>
@@ -834,15 +985,24 @@ class BingoGame extends Component {
 								</div>
 
 								{/* ----------- Settings when using generation ---------- */}
-								<div data-visibility={this.state.displayBoardOnly === false ? "show" : "hide"}>
+								<div
+									data-visibility={
+										this.state.displayBoardOnly === false ? 'show' : 'hide'
+									}
+								>
 									{/* ----------- Autoplay Settings ---------- */}
 									<div className="row no-wrap align-center justify-start">
 										<div className="col shrink min-size-150 padding-horizontal-lg">
 											<h6>Autoplay Speed:</h6>
 										</div>
 										<div className="col shrink text-center padding-vertical-lg padding-horizontal-lg">
-											<div className="row no-wrap align-center slider" data-disabled={this.state.displayBoardOnly}>
-												<div className="col shrink padding-right-lg white-text">Slower</div>
+											<div
+												className="row no-wrap align-center slider"
+												data-disabled={this.state.displayBoardOnly}
+											>
+												<div className="col shrink padding-right-lg white-text">
+													Slower
+												</div>
 												<div className="col">
 													<Slider
 														min={3500}
@@ -853,7 +1013,9 @@ class BingoGame extends Component {
 														reverse={true}
 													/>
 												</div>
-												<div className="col shrink padding-left-lg white-text">Faster</div>
+												<div className="col shrink padding-left-lg white-text">
+													Faster
+												</div>
 											</div>
 										</div>
 									</div>
@@ -867,50 +1029,86 @@ class BingoGame extends Component {
 											{/* Disabled if manual calling mode is on */}
 											<div
 												className="row no-wrap justify-start"
-												data-visibility={this.speechEnabled === true ? "show" : "hide"}>
+												data-visibility={
+													this.speechEnabled === true ? 'show' : 'hide'
+												}
+											>
 												{/* Only shown if speech is enabled by the browser */}
 												<div className="col shrink padding-right-xlg">
-													<label className={this.state.enableCaller ? "toggle checked" : "toggle"}>
+													<label
+														className={
+															this.state.enableCaller
+																? 'toggle checked'
+																: 'toggle'
+														}
+													>
 														<span className="toggle-span"></span>
 														<span>Enable</span>
 														<input
 															type="checkbox"
 															data-gamemode="enable-caller"
 															onChange={this.handleCheckbox}
-															checked={this.state.enableCaller}></input>
+															checked={this.state.enableCaller}
+														></input>
 													</label>
 												</div>
 												<div
 													className="col shrink padding-right-xlg mobile-no-horizontal-padding"
-													data-visibility={this.state.enableCaller ? "show" : "hide"}>
-													<label className={this.state.doubleCall ? "toggle checked" : "toggle"}>
+													data-visibility={
+														this.state.enableCaller ? 'show' : 'hide'
+													}
+												>
+													<label
+														className={
+															this.state.doubleCall
+																? 'toggle checked'
+																: 'toggle'
+														}
+													>
 														<span className="toggle-span"></span>
 														<span>Double Call</span>
 														<input
 															type="checkbox"
 															data-gamemode="enable-doublecall"
 															onChange={this.handleCheckbox}
-															checked={this.state.doubleCall}></input>
+															checked={this.state.doubleCall}
+														></input>
 													</label>
 												</div>
 												<div
 													className="col shrink padding-right-xlg mobile-no-horizontal-padding"
-													data-visibility={this.state.enableCaller ? "show" : "hide"}>
-													<label className={this.state.extraTalk ? "toggle checked" : "toggle"}>
+													data-visibility={
+														this.state.enableCaller ? 'show' : 'hide'
+													}
+												>
+													<label
+														className={
+															this.state.extraTalk ? 'toggle checked' : 'toggle'
+														}
+													>
 														<span className="toggle-span"></span>
 														<span>Chatty</span>
 														<input
 															type="checkbox"
 															data-gamemode="enable-extratalk"
 															onChange={this.handleCheckbox}
-															checked={this.state.extraTalk}></input>
+															checked={this.state.extraTalk}
+														></input>
 													</label>
 												</div>
 											</div>
 
 											{/* Only shown if speech is DISABLED by the browser */}
-											<div className="row no-wrap" data-visibility={this.speechEnabled === true ? "hide" : "show"}>
-												<div className="col grow">Sorry, but your browser does not support the audible bingo caller.</div>
+											<div
+												className="row no-wrap"
+												data-visibility={
+													this.speechEnabled === true ? 'hide' : 'show'
+												}
+											>
+												<div className="col grow">
+													Sorry, but your browser does not support the audible
+													bingo caller.
+												</div>
 											</div>
 										</div>
 									</div>
@@ -918,7 +1116,13 @@ class BingoGame extends Component {
 									{/* ----------- Caller Selection ----------- */}
 									<div
 										className="row align-start justify-start"
-										data-visibility={this.speechEnabled === true && this.state.enableCaller === true ? "show" : "hide"}>
+										data-visibility={
+											this.speechEnabled === true &&
+											this.state.enableCaller === true
+												? 'show'
+												: 'hide'
+										}
+									>
 										<div className="col shrink min-size-150 padding-vertical-md padding-horizontal-lg">
 											<h6>Caller Selection:</h6>
 										</div>
@@ -941,20 +1145,28 @@ class BingoGame extends Component {
 										</div>
 
 										<div className="col grow padding-horizontal-lg">
-											<label className={this.state.chime ? "toggle checked" : "toggle"}>
+											<label
+												className={
+													this.state.chime ? 'toggle checked' : 'toggle'
+												}
+											>
 												<span className="toggle-span"></span>
 												<span>Enable</span>
 												<input
 													type="checkbox"
 													data-gamemode="enable-chime"
 													onChange={this.handleCheckbox}
-													checked={this.state.chime}></input>
+													checked={this.state.chime}
+												></input>
 											</label>
 										</div>
 									</div>
 
 									{/* ----------- Chime Selection ----------- */}
-									<div className="row no-wrap align-start justify-start" data-visibility={this.state.chime ? "show" : "hide"}>
+									<div
+										className="row no-wrap align-start justify-start"
+										data-visibility={this.state.chime ? 'show' : 'hide'}
+									>
 										<div className="col shrink min-size-150 padding-vertical-md padding-horizontal-lg">
 											<h6>Chime Selection:</h6>
 										</div>
@@ -978,19 +1190,20 @@ class BingoGame extends Component {
 						<div className="col grow min-size-350 padding-vertical-xxlg padding-horizontal-xxlg white-text">
 							<h4 className="margin-vertical-md">Latest Updates</h4>
 							<p className="wrap-text small-text">
-								Let's Play Bingo was last updated on <strong>5/21/2022</strong>. Recent updates include:
+								This version is retired and was last updated on{' '}
+								<strong>5/21/2022</strong>.
 							</p>
-							<ul className="small-text padding-left-xlg">
-								<li>Brand new game mode!</li>
-							</ul>
-							<p className="x-small-text">
-								See the full <a href="/releases">Release Notes</a>!
-							</p>
-							<p className="x-small-text">
-								Need to report a bug?{" "}
-								<button className="textOnly secondary" onClick={this.handleBugReport}>
-									Email me!
-								</button>
+							<p className="wrap-text small-text">
+								For the latest version of Let's Play Bingo 90 Ball with new
+								features and improvements, please visit the latest edition at{' '}
+								<a
+									href="https://letsplaybingo.io"
+									target="_blank"
+									rel="noreferrer"
+								>
+									letsplaybingo.io
+								</a>
+								.
 							</p>
 						</div>
 					</div>
