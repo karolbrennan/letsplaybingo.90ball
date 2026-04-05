@@ -802,27 +802,6 @@ class BingoGame extends Component {
 		this.setState({ board: board, previousCallList });
 	};
 
-	/**
-	 * Sends an email that contains game
-	 * settings and device info to help with
-	 * replicating user issues
-	 */
-	handleBugReport = () => {
-		let subject = "Let's Play Bingo 90 ball bug report";
-		let body = `Thank you for playing let's play bingo and for taking the time to report a bug! Please describe what is happening to you so I may fix it ASAP.`;
-		body += `%0D%0A%0D%0A%0D%0A -------------------------------- PLEASE LEAVE EVERYTHING BELOW THIS LINE IN TACT --------------------------------`;
-		body += `%0D%0A%0D%0A The data below includes information about your device and your game settings. This information will help me replicate your issue so I can fix it.`;
-		body += `%0D%0A%0D%0A----- Browser/Device Info ------ %0D%0A`;
-		const { userAgent } = navigator;
-		body += JSON.stringify(userAgent);
-		body += `%0D%0A%0D%0A----- Game State ------ %0D%0A`;
-		let gameData = this.state;
-		body += JSON.stringify(gameData);
-		window.open(
-			`mailto:hello@letsplaybingo.io?subject=${subject}&body=${body}`,
-		);
-	};
-
 	/* ------------------- Render */
 	render() {
 		return (

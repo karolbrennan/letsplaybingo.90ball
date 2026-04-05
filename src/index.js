@@ -67,7 +67,7 @@ const routing = (
 				<div className="col">For entertainment purposes only.</div>
 				<div className="col text-center">
 					&copy; 2017 - {new Date().getFullYear()}{' '}
-					<a href="mailto:hello@letsplaybingo.io">Let's Play Bingo</a>
+					<a href="https://letsplaybingo.io">Let's Play Bingo</a>
 				</div>
 				<div className="col text-right">
 					<Link to="/releases">Release Notes</Link> |{' '}

@@ -1,4 +1,4 @@
-# Let's Play Bingo - 90 Ball [![Netlify Status](https://api.netlify.com/api/v1/badges/b70ed4c3-54c7-49e1-880c-9d21499f3c90/deploy-status)](https://app.netlify.com/sites/lpb90ball/deploys)
+# Let's Play Bingo - 90 Ball
 
 This is the 90 ball edition of Let's Play Bingo. 90 Ball is a version of bingo played mostly in the UK. There's quirks with this game type. The board goes up to 90 numbers, and it is played on special cards called Tickets.
 
@@ -16,11 +16,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Languages Used
 
--   HTML
--   CSS
--   JavaScript
--   ReactJS
+- HTML
+- CSS
+- JavaScript
+- ReactJS
 
 ### Frameworks / Libraries Used
 
--   [Web Speech Synthesis API](https://developers.google.com/web/updates/2014/01/Web-apps-that-talk-Introduction-to-the-Speech-Synthesis-API) (this is an experimental technology)
+- [Web Speech Synthesis API](https://developers.google.com/web/updates/2014/01/Web-apps-that-talk-Introduction-to-the-Speech-Synthesis-API) (this is an experimental technology)
